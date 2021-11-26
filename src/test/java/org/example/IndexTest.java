@@ -9,6 +9,17 @@ public class IndexTest {
 
     @Test
     public void testLoginSuccess() {
-        assertTrue(index.listOfUsers("Adam", "Johnson"));
+        index.addUsers("Adam", "Johnson");
+
+        assertTrue(index.logIn("Adam", "Johnson"));
+    }
+
+    @Test
+    public void testUserListLoginSuccess() {
+        index.addUsers("anna", "losen");
+        index.addUsers("berit", "123456");
+        index.addUsers("kalle", "password");
+
+        assertTrue(index.logIn("anna", "losen"));
     }
 }

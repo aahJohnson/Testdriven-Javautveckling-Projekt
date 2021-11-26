@@ -1,28 +1,20 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.HashMap;
 
 public class Index {
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+    public HashMap<String, Profile> userList = new HashMap<String, Profile>();
 
-        System.out.println("Inser Username: ");
-        String username = scan.nextLine();
-        System.out.println("Welcome " + username + ", please insert password: ");
-        String password = scan.nextLine();
+    public boolean logIn(String username, String password) {
+
+        if (userList.containsKey(username)) {
+            return userList.get(username).getPassword().equals(password);
+        }
+
+        return false;
     }
 
-    static boolean listOfUsers(String username, String password) {
-        String correctUsername = "Adam";
-        String correctPassword = "Johnson";
-
-        if (username.equals(correctUsername) && password.equals(correctPassword)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    public void addUsers(String username, String password) {
+        userList.put(username, new Profile(username, password));
     }
 }
