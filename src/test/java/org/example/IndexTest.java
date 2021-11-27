@@ -22,4 +22,9 @@ public class IndexTest {
 
         assertTrue(index.logIn("anna", "losen"));
     }
+
+    @Test
+    public void testEncryptedPasswordSuccess() {
+        assertTrue(PasswordEncrypter.generateNewHashPassword(""));
+    }
 }
