@@ -1,27 +1,37 @@
 package org.example;
 
+import org.example.enums.Permissions;
+
 public class Profile {
-    String username;
-    String password;
 
-    public Profile(String username, String password) {
-        this.username = username;
+    private String token;
+    private String password;
+    private Permissions accountPermissions;
+    private Permissions provisionsCalcPermissions;
+
+    public Profile(String username, String password, Permissions accountPermissions, Permissions provisionsCalcPermissions) {
         this.password = password;
+        this.accountPermissions = accountPermissions;
+        this.provisionsCalcPermissions = provisionsCalcPermissions;
     }
 
-    public String getUsername() {
-        return username;
+    public Permissions getAccountPermissions() {
+        return accountPermissions;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public Permissions getProvisionsCalcPermissions() {
+        return provisionsCalcPermissions;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -1,7 +1,10 @@
 package org.example;
 
+import org.example.enums.Permissions;
+import org.example.enums.Resource;
 import org.example.utilities.JwtUtil;
 import org.example.utilities.PasswordEncrypter;
+import org.example.utilities.PermissionUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,14 +19,16 @@ public class IndexTest {
     void setUp() {
         index = new Index();
 
-        index.addUsers("anna", "losen");
-        index.addUsers("berit", "123456");
-        index.addUsers("kalle", "password");
+        index.addUsers("anna", "losen", Permissions.READ_WRITE_EXECUTE, Permissions.EXECUTE);
+        index.addUsers("berit", "123456", Permissions.READ_EXECUTE, Permissions.WRITE);
+        index.addUsers("kalle", "password", Permissions.READ, Permissions.READ_WRITE);
+
+        index.updateUserPermissionList();
     }
 
     @Test
     public void testEncryptedPasswordSuccess() {
-        assertTrue(PasswordEncrypter.generateNewHashPassword(""));
+        assertTrue(PasswordEncrypter.generateNewHashPassword("123456"));
     }
 
     @ParameterizedTest
@@ -42,5 +47,17 @@ public class IndexTest {
         String token = index.logIn(username, password);
 
         assertTrue(JwtUtil.validateToken(username, token));
+    }
+
+    @Test
+    void testUserPermissionSuccess() {
+        index.setTokenToAllUsers();
+        index.userList.forEach((username, user) -> {
+            assertNotNull(PermissionUtils.getUserPermissions(user.getToken(), Resource.ACCOUNT));
+        });
+
+        index.userList.forEach((username, user) -> {
+            assertNotNull(PermissionUtils.getUserPermissions(user.getToken(), Resource.PROVISION_CALC));
+        });
     }
 }

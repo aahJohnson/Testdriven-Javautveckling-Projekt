@@ -1,6 +1,8 @@
 package org.example;
 
+import org.example.enums.Permissions;
 import org.example.utilities.JwtUtil;
+import org.example.utilities.PermissionUtils;
 
 import java.util.HashMap;
 
@@ -15,7 +17,17 @@ public class Index {
         throw new LoginFailException("Failed login attempt");
     }
 
-    public void addUsers(String username, String password) {
-        userList.put(username, new Profile(username, password));
+    public void addUsers(String username, String password, Permissions accountPermissions, Permissions provisionsPermissions) {
+        userList.put(username, new Profile(username, password, accountPermissions, provisionsPermissions));
+    }
+
+    public void setTokenToAllUsers(){
+        userList.forEach((username, user) -> {
+            user.setToken(JwtUtil.generateToken(username));
+        });
+    }
+
+    public void updateUserPermissionList() {
+        PermissionUtils.setProfiles(userList);
     }
 }

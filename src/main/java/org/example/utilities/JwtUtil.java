@@ -9,9 +9,9 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 public class JwtUtil {
-    static String phrase ="Johnson";
+    final private static String phrase ="Johnson";
 
-    public static String generateToken(String username){
+    public static String generateToken(String username) {
         String token = "";
 
         try {
@@ -19,7 +19,7 @@ public class JwtUtil {
 
             token = JWT.create().withIssuer("auth0").withClaim("username", username).sign(algorithm);
         }
-        catch(JWTCreationException e){
+        catch(JWTCreationException e) {
             e.printStackTrace();
         }
         return token;
@@ -43,7 +43,7 @@ public class JwtUtil {
             }
             return true;
         }
-        catch (JWTVerificationException e){
+        catch (JWTVerificationException e) {
             return false;
         }
     }

@@ -42,7 +42,6 @@ public class PasswordEncrypter {
 
         } finally {
             spec.clearPassword();
-
         }
     }
 
