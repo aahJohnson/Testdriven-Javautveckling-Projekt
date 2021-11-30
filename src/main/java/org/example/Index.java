@@ -1,17 +1,18 @@
 package org.example;
 
+import org.example.utilities.JwtUtil;
+
 import java.util.HashMap;
 
 public class Index {
     public HashMap<String, Profile> userList = new HashMap<String, Profile>();
 
-    public boolean logIn(String username, String password) {
+    public String logIn(String username, String password) throws LoginFailException {
 
-        if (userList.containsKey(username)) {
-            return userList.get(username).getPassword().equals(password);
+        if (userList.containsKey(username) && userList.get(username).getPassword().equals(password)) {
+            return JwtUtil.generateToken(username);
         }
-
-        return false;
+        throw new LoginFailException("Failed login attempt");
     }
 
     public void addUsers(String username, String password) {
