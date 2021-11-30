@@ -27,7 +27,7 @@ public class IndexTest {
     }
 
     @Test
-    public void testEncryptedPasswordSuccess() {
+    public void testEncryptedPasswordSuccess() throws Exception {
         assertTrue(PasswordEncrypter.generateNewHashPassword("123456"));
     }
 
